@@ -3,8 +3,8 @@ package handlers
 import (
 	"bombparty/internal/tools"
 	"database/sql"
-	"encoding/json"
 	"fmt"
+	"html/template"
 	"log"
 	"net/http"
 )
@@ -72,6 +72,7 @@ func CreateForm(w http.ResponseWriter, r *http.Request) {
 
 		if !check {
 			tools.InsertDataUser(username, password)
+			http.Redirect(w, r, "/login_account", http.StatusFound)
 		}
 	}
 	http.Redirect(w, r, "/login_account", http.StatusFound)
@@ -95,7 +96,8 @@ func Game(w http.ResponseWriter, r *http.Request) {
 
 	if cookie.Value != "" && tools.CheckUsernameExists(cookie.Value, db) {
 		tools.RenderTemplate(w, "game")
-		json.NewEncoder(w).Encode("test")
+		tmpl := template.Must(template.ParseFiles("./static/notConnected.html"))
+		tmpl.Execute(w, 45)
 	} else {
 		http.Redirect(w, r, "/", http.StatusFound)
 	}

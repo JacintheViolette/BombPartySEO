@@ -15,7 +15,7 @@ html {
     width: 400px;
     padding: 40px;
     transform: translate(-50%, -50%);
-    background: rgba(153,51,255,.5);
+    background: #fffffc;
     box-sizing: border-box;
     box-shadow: 0 15px 25px rgba(0,0,0,.6);
     border-radius: 10px;
@@ -24,7 +24,7 @@ html {
   .login-box h2 {
     margin: 0 0 30px;
     padding: 0;
-    color: #fff;
+    color: #353535;
     text-align: center;
   }
   
@@ -36,10 +36,10 @@ html {
     width: 100%;
     padding: 10px 0;
     font-size: 16px;
-    color: #fff;
+    color: #353535;
     margin-bottom: 30px;
     border: none;
-    border-bottom: 1px solid #fff;
+    border-bottom: 1px solid #333;
     outline: none;
     background: transparent;
   }
@@ -49,7 +49,7 @@ html {
     left: 0;
     padding: 10px 0;
     font-size: 16px;
-    color: #fff;
+    color: #353535;
     pointer-events: none;
     transition: .5s;
   }
@@ -58,7 +58,7 @@ html {
   .login-box .user-box input:valid ~ label {
     top: -20px;
     left: 0;
-    color: #fff;
+    color: #353535;
     font-size: 12px;
   }
   
@@ -66,7 +66,7 @@ html {
     position: relative;
     display: inline-block;
     padding: 10px 20px;
-    color: #fffffc;
+    color: #353535;
     font-size: 16px;
     text-decoration: none;
     text-transform: uppercase;
@@ -77,13 +77,13 @@ html {
   }
   
   .login-box a:hover {
-    background: #fffffc;
-    color: #333;
+    background: #353535;
+    color: #fffffc;
     border-radius: 5px;
-      box-shadow: 0 0 5px #fffffc,
-                0 0 25px #fffffc,
-                0 0 50px #fffffc,
-                0 0 100px #fffffc;
+      box-shadow: 0 0 5px #8338ec,
+                0 0 25px #8338ec,
+                0 0 50px #8338ec,
+                0 0 100px #8338ec;
   }
   
   .login-box a span {
@@ -96,7 +96,7 @@ html {
     left: -100%;
     width: 100%;
     height: 2px;
-    background: linear-gradient(90deg, transparent, #fffffc);
+    background: linear-gradient(90deg, transparent, #8338ec);
     animation: btn-anim1 1s linear infinite;
   }
   
@@ -114,7 +114,7 @@ html {
     right: 0;
     width: 2px;
     height: 100%;
-    background: linear-gradient(180deg, transparent, #fffffc);
+    background: linear-gradient(180deg, transparent, #8338ec);
     animation: btn-anim2 1s linear infinite;
     animation-delay: .25s
   }
@@ -133,7 +133,7 @@ html {
     right: -100%;
     width: 100%;
     height: 2px;
-    background: linear-gradient(270deg, transparent, #fffffc);
+    background: linear-gradient(270deg, transparent, #8338ec);
     animation: btn-anim3 1s linear infinite;
     animation-delay: .5s
   }
@@ -152,7 +152,7 @@ html {
     left: 0;
     width: 2px;
     height: 100%;
-    background: linear-gradient(360deg, transparent, #fffffc);
+    background: linear-gradient(360deg, transparent, #8338ec);
     animation: btn-anim4 1s linear infinite;
     animation-delay: .75s
   }
