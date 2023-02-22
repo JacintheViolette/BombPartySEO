@@ -16,7 +16,11 @@ body {
     align-items: center;
     min-height: 100vh;
     font-family: sans-serif;
-    background: linear-gradient(#ffbe0b, #fb5607, #ff006e);
+    background: url('../assets/background_menu.png');
+    background-position-x: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-attachment: fixed;
 }
 
 ul

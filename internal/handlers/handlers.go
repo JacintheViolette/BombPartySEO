@@ -4,7 +4,6 @@ import (
 	"bombparty/internal/tools"
 	"database/sql"
 	"fmt"
-	"html/template"
 	"log"
 	"net/http"
 )
@@ -15,7 +14,12 @@ func Start(w http.ResponseWriter, r *http.Request) {
 }
 
 func Menu(w http.ResponseWriter, r *http.Request) {
-	tools.RenderTemplate(w, "menu")
+	_, err := r.Cookie("username")
+	if err != nil {
+		tools.RenderTemplate(w, "menu")
+	} else {
+			tools.RenderTemplate(w, "menu_connected")
+	}
 }
 
 func CreateAccount(w http.ResponseWriter, r *http.Request) {
@@ -47,8 +51,10 @@ func LoginForm(w http.ResponseWriter, r *http.Request) {
 
 	if checkUsername && password == checkPassword {
 		tools.SetCookie("username", username, 600, w, r)
+		http.Redirect(w, r, "/menu", http.StatusFound)
+	} else {
+		http.Redirect(w, r, "/menu", http.StatusFound)
 	}
-	http.Redirect(w, r, "/", http.StatusFound)
 	/*
 		fmt.Fprintln(w, "Current Username Login\n")
 		fmt.Fprintln(w, "	Username: "+username)
@@ -88,17 +94,26 @@ func CreateForm(w http.ResponseWriter, r *http.Request) {
 func Game(w http.ResponseWriter, r *http.Request) {
 	db, err := sql.Open("sqlite3", "data.db") // ouvre la connexion
 	if err != nil {
-		log.Fatal(err)
+		fmt.Println(err)
 	}
 	defer db.Close()
 
-	cookie, _ := r.Cookie("username")
+	cookie, errCookie := r.Cookie("username")
 
-	if cookie.Value != "" && tools.CheckUsernameExists(cookie.Value, db) {
-		tools.RenderTemplate(w, "game")
-		tmpl := template.Must(template.ParseFiles("./static/notConnected.html"))
-		tmpl.Execute(w, 45)
+	if errCookie != nil {
+		http.Redirect(w, r, "/menu", http.StatusFound)
 	} else {
-		http.Redirect(w, r, "/", http.StatusFound)
+		if tools.CheckUsernameExists(cookie.Value, db) {			
+			tools.RenderTemplate(w, "game")
+		}
 	}
+}
+
+func LogOut(w http.ResponseWriter, r *http.Request) {
+	tools.SetCookie("username", "", -1, w, r)
+	http.Redirect(w, r, "/menu", http.StatusFound)
+}
+
+func Account(w http.ResponseWriter, r *http.Request) {
+	tools.RenderTemplate(w, "account")
 }

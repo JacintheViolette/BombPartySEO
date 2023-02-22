@@ -7,13 +7,16 @@ import (
 )
 
 func main() {
-	addr := "10.10.5.98:6969"
-
+	addr := "10.10.5.98:6960"
+	
 	http.Handle("/style/", http.StripPrefix("/style/", http.FileServer(http.Dir("./style"))))
 	http.Handle("/script/", http.StripPrefix("/script/", http.FileServer(http.Dir("./script"))))
+	http.Handle("/assets/", http.StripPrefix("/assets/", http.FileServer(http.Dir("./assets"))))
 	http.HandleFunc("/", handlers.Start)
 	http.HandleFunc("/menu", handlers.Menu)
 	http.HandleFunc("/game", handlers.Game)
+	http.HandleFunc("/logout", handlers.LogOut)
+	http.HandleFunc("/account", handlers.Account)
 	http.HandleFunc("/create_account", handlers.CreateAccount)
 	http.HandleFunc("/login_account", handlers.LoginAccount)
 	http.HandleFunc("/login_account/form", handlers.LoginForm)
