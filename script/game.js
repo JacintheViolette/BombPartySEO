@@ -1,6 +1,12 @@
+import { QUESTION } from './question.js'
+
 const GAME_STATE = {
     lastTime: Date.now() - 1,
     timer: [0, 19.99],
+    currentInput: "",
+    check: false,
+    questionPicked: [],
+    questions: QUESTION,
 }
 
 function timer() {
@@ -37,6 +43,37 @@ function updateTimer(dt) {
 }
 
 function updateBomb() {
+    var bomb = document.getElementById('bomb')
+    if (GAME_STATE.timer[1] == 0) {
+        bomb.src = '../assets/Bombes/5_bombe.png'
+    } else if (GAME_STATE.timer[1] > 16) {
+        bomb.src = '../assets/Bombes/1_bombe.png'
+    } else if (GAME_STATE.timer[1] > 12) {
+        bomb.src = '../assets/Bombes/2_bombe.png'
+    } else if (GAME_STATE.timer[1] > 8) {
+        bomb.src = '../assets/Bombes/3_bombe.png'
+    } else if (GAME_STATE.timer[1] > 4) {
+        bomb.src = '../assets/Bombes/4_bombe.png'
+    }
+}
+
+function checkIfInIsCorrect(currentInput, reponse) {
+    /*
+    console.log(reponse.toUpperCase())
+    console.log(currentInput.toUpperCase())
+    */
+
+    if (currentInput.toUpperCase() == reponse.toUpperCase()) {
+        GAME_STATE.check = true
+    }
+}
+
+function pickRandomNumber() {
+    const randomNumber = Math.floor(Math.random() * question);
+    console.log(randomNumber);
+}
+
+function pickAnotherQuestion() {
     
 }
 
@@ -44,8 +81,21 @@ function update() {
     const currentTime = Date.now()
     const dt = (currentTime - GAME_STATE.lastTime) / 1000
 
-    updateTimer(dt)
+    if (GAME_STATE.timer[1] != 0) {
+        updateTimer(dt)
+    }
+
+    checkIfInIsCorrect(GAME_STATE.currentInput, ""/* Vrai réponse à la question */)
+
+    if (GAME_STATE.check) {
+        pickAnotherQuestion()
+    }
+
+    //console.log(GAME_STATE.questions[0][1])
+
     updateBomb()
+
+    /*  */
 
     GAME_STATE.lastTime = currentTime
 
@@ -59,3 +109,32 @@ function init() {
 }
 
 init()
+
+
+// Fonction pour la boite à Question
+
+const boutonRepondre = document.getElementById("bouton-repondre");
+const reponse = document.getElementById("reponse");
+const reponseUtilisateur = document.getElementById("reponse-utilisateur");
+
+boutonRepondre.addEventListener('click', (e) => {
+    reponse.value = ""
+})
+
+reponse.addEventListener('input', updateValue);
+
+function updateValue(e) {
+    GAME_STATE.currentInput = e.target.value
+    reponseUtilisateur.textContent = e.target.value;
+}
+
+function toggleDiv() {
+  const monDiv = document.getElementById("mon-div");
+  if (monDiv.style.display === "none") {
+    monDiv.style.display = "block";
+  } else {
+    monDiv.style.display = "none";
+  }
+}
+
+// Fin de la Fonction 

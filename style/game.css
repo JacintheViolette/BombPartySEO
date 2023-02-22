@@ -1,20 +1,90 @@
+@font-face {
+    font-family: myFirstFont;
+    src: url('../assets/Orbitron-VariableFont_wght.ttf');
+}
+
 html,
 body  {
+    font-family: myFirstFont;
     height: 100%;
     overflow: hidden;
     background-image: url('../assets/background_game.png');
     background-position-x: center;
-    background-repeat: no-repeat;
     background-size: contain;
     background-attachment: fixed;
+    background-repeat: no-repeat;
 }
 
 #bomb {
+    width: 30%;
     position: absolute; /* postulat de départ */
-    top: 50%; left: 50%; /* à 50%/50% du parent référent */
+    top: 60%; left: 50%; /* à 50%/50% du parent référent */
     transform: translate(-50%, -50%); /* décalage de 50% de sa propre taille */
 }
 
 #timer {
     display: block;
 }
+
+/*****Boite à Question*****/
+
+/*body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}*/
+
+.question-box {
+  background-color: #f2f2f2;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 400px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+input[type="text"] {
+  width: 80%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  margin-bottom: 10px;
+}
+
+button {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #3e8e41;
+}
+
+#reponse-utilisateur {
+  margin-top: 20px;
+  font-size: 18px;
+}
+
+#mon-div {
+  display: none;
+  background-color: #f2f2f2;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 400px;
+  margin: 10px auto;
+  text-align: center;
+}
+
+/*****Fin de la Boite*****/

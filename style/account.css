@@ -1,8 +1,12 @@
 @import url('https://fonts.googleapis.com/css?family=Abel');
 
 html, body {
-  background: #FCEEB5;
-  font-family: Abel, Arial, Verdana, sans-serif;
+  background: url('../assets/MicrosoftTeams-image6.png');
+  background-position-x: center;
+  background-size: cover;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  font-family: myFirstFont;
 }
 
 .center {
@@ -129,7 +133,7 @@ html, body {
 }
 
 .card.green .additional .stats {
-  color: #325C46;
+  color: #353535;
 }
 
 .card .additional .stats > div {

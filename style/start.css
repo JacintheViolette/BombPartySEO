@@ -1,3 +1,8 @@
+@font-face {
+  font-family: myFirstFont;
+  src: url('../assets/Orbitron-VariableFont_wght.ttf');
+}
+
 * {
   box-sizing: border-box;
 }
@@ -9,12 +14,13 @@ html {
 body {
   margin: 0;
   padding: 0;
-  font-family: "Patrick Hand SC", cursive;
-  background: linear-gradient(#ff006e,#fb5607);
-  min-height: calc(100vh - 32px);
-  background: #ffd89b;
+  font-family: myFirstFont;
+  background: url('../assets/start_fond.png');
+  background-position-x: center;
+  background-size: contain;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
   padding-bottom: 30px;
-  box-sizing: border-box;
 }
 
 .start-screen {

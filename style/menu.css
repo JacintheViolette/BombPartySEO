@@ -1,3 +1,8 @@
+@font-face {
+    font-family: myFirstFont;
+    src: url('../assets/Orbitron-VariableFont_wght.ttf');
+}
+
 html {
     height: 100%;
 }
@@ -15,12 +20,12 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    font-family: sans-serif;
-    background: url('../assets/background_menu.png');
+    font-family: myFirstFont;
+    background-image: url('../assets/MicrosoftTeams-image6.png');
     background-position-x: center;
-    background-repeat: no-repeat;
-    background-size: contain;
+    background-size: cover;
     background-attachment: fixed;
+    background-repeat: no-repeat;
 }
 
 ul

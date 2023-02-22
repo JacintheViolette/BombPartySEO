@@ -1,15 +1,20 @@
+@font-face {
+  font-family: myFirstFont;
+  src: url('../assets/Orbitron-VariableFont_wght.ttf');
+}
+
 html {
     height: 100%;
   }
   body {
     margin:0;
     padding:0;
-    font-family: sans-serif;
+    font-family: myFirstFont;
     background-image: url('../assets/MicrosoftTeams-image6.png');
     background-position-x: center;
-    background-repeat: no-repeat;
-    background-size: contain;
+    background-size: cover;
     background-attachment: fixed;
+    background-repeat: no-repeat
   }
   
   .login-box {

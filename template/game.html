@@ -10,6 +10,20 @@
 <body>
     <div id="timer"></div>
     <img id="bomb" src="../assets/Bombe1.png" alt="Bombe">
-    <script src="../script/game.js" defer></script>
+    <div class="question-box">
+        <h2>Quel intelligence artificielle Google utilise le machine learning pour proposer de meilleurs résultats aux internautes sur des requêtes complexes ?</h2>
+        <input type="text" id="reponse" placeholder="Entrez le titre de votre événement ici...">
+        <button id="bouton-repondre">Clear</button>
+        <div id="reponse-utilisateur"></div>
+    </div>
+    <div style="position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); text-align: center; margin-top: 10px; height: 100px; width: 20%; border-radius: 10px;">
+        <img id="vie1" src="../assets/Vie.png" style="width: 100px; height: 100px;">
+        <img id="vie2" src="../assets/Vie.png" style="width: 100px; height: 100px;">
+        <img id="vie3" src="../assets/Vie.png" style="width: 100px; height: 100px;">
+    </div>
+    <div id="mon-div">Ceci est ma div à afficher/cacher</div>
+
+    <script type="module" src="../script/question.js"></script>
+    <script type="module" src="../script/game.js" defer></script>
 </body>
 </html>
