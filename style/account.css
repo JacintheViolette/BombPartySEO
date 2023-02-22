@@ -1,12 +1,13 @@
 @import url('https://fonts.googleapis.com/css?family=Abel');
 
 html, body {
+  font-family: myFirstFont;
   background: url('../assets/MicrosoftTeams-image6.png');
   background-position-x: center;
   background-size: cover;
   background-attachment: fixed;
   background-repeat: no-repeat;
-  font-family: myFirstFont;
+  
 }
 
 .center {
