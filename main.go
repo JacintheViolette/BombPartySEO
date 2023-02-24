@@ -2,7 +2,6 @@ package main
 
 import (
 	"bombparty/internal/handlers"
-	"fmt"
 	"log"
 
 	//"log"
@@ -25,8 +24,6 @@ func main() {
 	http.HandleFunc("/login_account", handlers.LoginAccount)
 	http.HandleFunc("/login_account/form", handlers.LoginForm)
 	http.HandleFunc("/create_account/form", handlers.CreateForm)
-
-	fmt.Println("Serveur lancé sur l'adresse http://localhost:8080")
 
 	log.Printf("Démarrage du serveur sur l'adresse http://%s\n", addr)
 	if err := http.ListenAndServe(addr, nil); err != nil {

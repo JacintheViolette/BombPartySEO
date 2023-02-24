@@ -2,18 +2,19 @@ import { QUESTION } from './question.js'
 
 const GAME_STATE = {
     lastTime: Date.now() - 1,
-    timer: [0, 5],
+    timer: [0, 19.99],
     currentInput: "",
     checkIfQuestionPicked: false,
     questionPicked: [],
     questions: QUESTION,
     dead: false,
     currentQuestion: {},
-    currentRound: 1,
+    currentRound: 20,
     currentDifficulty: 1,
     win: false,
     vie: 3,
     bruit: "../assets/sound/bomb-sound-effect..mp3",
+    explication: false,
 }
 
 function timer() {
@@ -112,6 +113,8 @@ function indice(str) {
     let specialCharRegex = /[\-\_\+\!\@\#\$\%\^\&\*\(\)\{\}\[\]\:\;\<\>\?\,\.\/\|\~\`\'\"]/gi;
     let letterCount = 0;
     let spaceCount = 0;
+
+    //if (str.length())
     
     for (let i = 0; i < str.length; i++) {
       if (str[i] === ' ') {
@@ -177,7 +180,6 @@ function checkLives() {
 
 
 function update() {
-    const BRUITBOMBE = new Audio(GAME_STATE.bruit)
     var currentIdx
     const currentTime = Date.now()
     const dt = (currentTime - GAME_STATE.lastTime) / 1000
@@ -187,61 +189,72 @@ function update() {
         document.getElementById("question-box").style.display = "none"
         document.getElementById("victoire").style.display = "block"
     }
-    /*
-    else if () {
 
+    if (GAME_STATE.explication) {
+        console.log("explication")
     }
-    */
 
-    if (!GAME_STATE.win && !GAME_STATE.dead) {
-        if (GAME_STATE.timer[1] != 0 && !GAME_STATE.win && !GAME_STATE.dead) {
-            updateTimer(dt)
-            updateBomb()
-            updateDifficulté()
-            updateRound()
-        }
-    
-        if (GAME_STATE.checkIfQuestionPicked == false && GAME_STATE.dead == false) {
-            if (currentIdx != undefined) {
-                GAME_STATE.questionPicked.push(currentIdx)
+    if (!GAME_STATE.explication) {
+        if (!GAME_STATE.win && !GAME_STATE.dead) {
+            if (GAME_STATE.timer[1] != 0 && !GAME_STATE.win && !GAME_STATE.dead) {
+                updateTimer(dt)
+                updateBomb()
+                updateDifficulté()
+                updateRound()
             }
-            currentIdx = pickRandomNum()
-            if (!checkIfQuestionWasAlreadyPicked(currentIdx, GAME_STATE.questionPicked)) {
+        
+            if (GAME_STATE.checkIfQuestionPicked == false && GAME_STATE.dead == false) {
+                if (currentIdx != undefined) {
+                    GAME_STATE.questionPicked.push(currentIdx)
+                }
+                currentIdx = pickRandomNum()
+                if (!checkIfQuestionWasAlreadyPicked(currentIdx, GAME_STATE.questionPicked)) {
+                    var text = pickAnotherQuestion(currentIdx)
+                    GAME_STATE.checkIfQuestionPicked = true
+                    const reponseUtilisateur = document.getElementById("reponse-utilisateur");
+                    reponseUtilisateur.textContent = indice(text);
+                }
+            }
+        
+            //console.log(GAME_STATE.dead)
+        
+            if (checkIfInIsCorrect(GAME_STATE.currentInput, GAME_STATE.currentQuestion.réponse)) {
+                GAME_STATE.checkIfQuestionPicked = !GAME_STATE.checkIfQuestionPicked
+                const reponse = document.getElementById("reponse");
+                reponse.value = ""
+                GAME_STATE.timer[1] = 19.99
+                GAME_STATE.currentRound++
+            }
+            if (GAME_STATE.timer[1] <= 0) {
+                GAME_STATE.dead == true
+            }
+            
+            if (GAME_STATE.timer[1] <= 0) {
+                currentIdx = pickRandomNum()
+                GAME_STATE.vie--
+                checkLives()
+                GAME_STATE.timer[1] = 19.99
                 var text = pickAnotherQuestion(currentIdx)
                 GAME_STATE.checkIfQuestionPicked = true
                 const reponseUtilisateur = document.getElementById("reponse-utilisateur");
                 reponseUtilisateur.textContent = indice(text);
+
+                if (GAME_STATE.vie > 0) {
+                    document.getElementById("question-box").style.display = "none"
+                    document.getElementById("reponse-box").style.display = "block"
+                    document.getElementById("explication").textContent = GAME_STATE.currentQuestion["explication"]
+                }
+
+                GAME_STATE.explication = true
             }
-        }
-    
-        //console.log(GAME_STATE.dead)
-    
-        if (checkIfInIsCorrect(GAME_STATE.currentInput, GAME_STATE.currentQuestion.réponse)) {
-            GAME_STATE.checkIfQuestionPicked = !GAME_STATE.checkIfQuestionPicked
-            const reponse = document.getElementById("reponse");
-            reponse.value = ""
-            GAME_STATE.timer[1] = 5
-            GAME_STATE.currentRound++
-        }
-        if (GAME_STATE.timer[1] <= 0) {
-            GAME_STATE.dead == true
-        }
-        
-        if (GAME_STATE.timer[1] <= 0) {
-            currentIdx = pickRandomNum()
-            GAME_STATE.vie--
-            checkLives()
-            GAME_STATE.timer[1] = 5
-            var text = pickAnotherQuestion(currentIdx)
-            GAME_STATE.checkIfQuestionPicked = true
-            const reponseUtilisateur = document.getElementById("reponse-utilisateur");
-            reponseUtilisateur.textContent = indice(text);
-        }
-        if (GAME_STATE.vie == 0) {
-            document.getElementById("question-box").style.display = "none"
-            document.getElementById("death-box").style.display = "block"
-            document.getElementById("bomb").style.display = "none"
-            GAME_STATE.dead = true
+            if (GAME_STATE.vie == 0) {
+                document.getElementById("question-box").style.display = "none"
+                document.getElementById("death-box").style.display = "block"
+                document.getElementById("bomb").style.display = "none"
+                document.getElementById("death").style.display = "block"
+                document.getElementById("raison").textContent = GAME_STATE.currentQuestion["explication"]
+                GAME_STATE.dead = true
+            }
         }
     }
     
@@ -263,6 +276,8 @@ init()
 
 const boutonRepondre = document.getElementById("bouton-repondre");
 const reponse = document.getElementById("reponse");
+const next = document.getElementById("next");
+const endButton = document.getElementById("mort-bouton");
 
 boutonRepondre.addEventListener('click', (e) => {
     reponse.value = ""
@@ -273,6 +288,22 @@ reponse.addEventListener('input', updateValue);
 function updateValue(e) {
     GAME_STATE.currentInput = e.target.value
     reponseUtilisateur.textContent = e.target.value;
+}
+
+next.addEventListener('click', finExplication)
+
+endButton.addEventListener('click', boutonFin)
+
+function finExplication() {
+    console.log("omggggg")
+    GAME_STATE.explication = false
+    document.getElementById("reponse-box").style.display = "none"
+    document.getElementById("question-box").style.display = "block"
+    //document.getElementById("explication").textContent = GAME_STATE.currentQuestion["explication"]
+}
+
+function boutonFin() {
+    window.location.href = "/menu";
 }
 
 function toggleDiv() {
