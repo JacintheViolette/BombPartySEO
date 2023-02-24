@@ -2,11 +2,18 @@ import { QUESTION } from './question.js'
 
 const GAME_STATE = {
     lastTime: Date.now() - 1,
-    timer: [0, 19.99],
+    timer: [0, 5],
     currentInput: "",
-    check: false,
+    checkIfQuestionPicked: false,
     questionPicked: [],
     questions: QUESTION,
+    dead: false,
+    currentQuestion: {},
+    currentRound: 1,
+    currentDifficulty: 1,
+    win: false,
+    vie: 3,
+    bruit: "../assets/sound/bomb-sound-effect..mp3",
 }
 
 function timer() {
@@ -58,51 +65,193 @@ function updateBomb() {
 }
 
 function checkIfInIsCorrect(currentInput, reponse) {
-    /*
-    console.log(reponse.toUpperCase())
-    console.log(currentInput.toUpperCase())
-    */
-
+    var tempCurrent = currentInput.toUpperCase()
+    var tempRep = reponse.toUpperCase()
+    console.log(tempCurrent)
+    console.log(tempRep)
     if (currentInput.toUpperCase() == reponse.toUpperCase()) {
-        GAME_STATE.check = true
+        return true
     }
 }
 
-function pickRandomNumber() {
-    const randomNumber = Math.floor(Math.random() * question);
-    console.log(randomNumber);
+function checkIfQuestionWasAlreadyPicked(nbr, arr) {
+    for (i in arr) {
+        if (nbr == i) {
+            return true
+        }
+    }
+    return false
 }
 
-function pickAnotherQuestion() {
-    
+function pickRandomNum() {
+    return Math.floor(Math.random() * 55) + 1
 }
+
+function pickAnotherQuestion(nbr) {
+    var temp
+    if (!checkIfQuestionWasAlreadyPicked(nbr, GAME_STATE.questionPicked)) {
+        var question = document.getElementById("question")
+        var text = GAME_STATE.questions[0][nbr]["question"]
+
+        GAME_STATE.currentQuestion = {
+            "question": text,
+            "difficulté": GAME_STATE.questions[0][nbr]["dificulté"],
+            "réponse": GAME_STATE.questions[0][nbr]["réponse"],
+            "explication": GAME_STATE.questions[0][nbr]["explication"],
+        }
+        question.textContent = text
+        temp = GAME_STATE.questions[0][nbr]["réponse"]
+        GAME_STATE.currentDifficulty = GAME_STATE.questions[0][nbr]["dificulté"]
+    }
+    return temp
+}
+
+function indice(str) {
+    let result = '';
+    let accentRegex = /[àáâãäåçèéêëìíîïñòóôõöøùúûüýÿ]/gi;
+    let specialCharRegex = /[\-\_\+\!\@\#\$\%\^\&\*\(\)\{\}\[\]\:\;\<\>\?\,\.\/\|\~\`\'\"]/gi;
+    let letterCount = 0;
+    let spaceCount = 0;
+    
+    for (let i = 0; i < str.length; i++) {
+      if (str[i] === ' ') {
+        result += ' ';
+        spaceCount++;
+      } else if (accentRegex.test(str[i]) || specialCharRegex.test(str[i])) {
+        result += str[i];
+      } else {
+        letterCount++;
+        if (Math.random() <= 0.6) {
+          result += '_';
+        } else {
+          result += str[i];
+        }
+      }
+    }
+    
+    // Insert spaces at the end of the string
+    for (let i = 0; i < spaceCount; i++) {
+      result += ' ';
+    }
+    
+    return result;
+}
+  
+  
+
+function updateDifficulté() {
+    var diff = document.getElementById("dif")
+    diff.src = "../assets/Icones difficulté/Difficult‚ " + GAME_STATE.currentDifficulty.toString() + ".png"
+} 
+
+function updateRound() {
+    var round = document.getElementById("num")
+    round.src = "../assets/chiffres comics/" + GAME_STATE.currentRound.toString() + "_comic.png"
+}
+
+function checkLives() {
+    var vie = GAME_STATE.vie
+
+    var vie1 = document.getElementById("vie1")
+    var vie2 = document.getElementById("vie2")
+    var vie3 = document.getElementById("vie3")
+
+    if (vie == 3) {
+        vie1.src = "../assets/Vie.png"
+        vie2.src = "../assets/Vie.png"
+        vie3.src = "../assets/Vie.png"
+    } else if (vie == 2) {
+        vie1.src = "../assets/Vie.png"
+        vie2.src = "../assets/Vie.png"
+        vie3.src = "../assets/Vie perdue.png"
+    } else if (vie == 1) {
+        vie1.src = "../assets/Vie.png"
+        vie2.src = "../assets/Vie perdue.png"
+        vie3.src = "../assets/Vie perdue.png"
+    } else {
+        vie1.src = "../assets/Vie perdue.png"
+        vie2.src = "../assets/Vie perdue.png"
+        vie3.src = "../assets/Vie perdue.png"
+    }
+}
+
 
 function update() {
+    const BRUITBOMBE = new Audio(GAME_STATE.bruit)
+    var currentIdx
     const currentTime = Date.now()
     const dt = (currentTime - GAME_STATE.lastTime) / 1000
 
-    if (GAME_STATE.timer[1] != 0) {
-        updateTimer(dt)
+    if (GAME_STATE.currentRound >= 21 && !GAME_STATE.win) {
+        GAME_STATE.win = true
+        document.getElementById("question-box").style.display = "none"
+        document.getElementById("victoire").style.display = "block"
     }
+    /*
+    else if () {
 
-    checkIfInIsCorrect(GAME_STATE.currentInput, ""/* Vrai réponse à la question */)
-
-    if (GAME_STATE.check) {
-        pickAnotherQuestion()
     }
+    */
 
-    //console.log(GAME_STATE.questions[0][1])
-
-    updateBomb()
-
-    /*  */
-
+    if (!GAME_STATE.win && !GAME_STATE.dead) {
+        if (GAME_STATE.timer[1] != 0 && !GAME_STATE.win && !GAME_STATE.dead) {
+            updateTimer(dt)
+            updateBomb()
+            updateDifficulté()
+            updateRound()
+        }
+    
+        if (GAME_STATE.checkIfQuestionPicked == false && GAME_STATE.dead == false) {
+            if (currentIdx != undefined) {
+                GAME_STATE.questionPicked.push(currentIdx)
+            }
+            currentIdx = pickRandomNum()
+            if (!checkIfQuestionWasAlreadyPicked(currentIdx, GAME_STATE.questionPicked)) {
+                var text = pickAnotherQuestion(currentIdx)
+                GAME_STATE.checkIfQuestionPicked = true
+                const reponseUtilisateur = document.getElementById("reponse-utilisateur");
+                reponseUtilisateur.textContent = indice(text);
+            }
+        }
+    
+        //console.log(GAME_STATE.dead)
+    
+        if (checkIfInIsCorrect(GAME_STATE.currentInput, GAME_STATE.currentQuestion.réponse)) {
+            GAME_STATE.checkIfQuestionPicked = !GAME_STATE.checkIfQuestionPicked
+            const reponse = document.getElementById("reponse");
+            reponse.value = ""
+            GAME_STATE.timer[1] = 5
+            GAME_STATE.currentRound++
+        }
+        if (GAME_STATE.timer[1] <= 0) {
+            GAME_STATE.dead == true
+        }
+        
+        if (GAME_STATE.timer[1] <= 0) {
+            currentIdx = pickRandomNum()
+            GAME_STATE.vie--
+            checkLives()
+            GAME_STATE.timer[1] = 5
+            var text = pickAnotherQuestion(currentIdx)
+            GAME_STATE.checkIfQuestionPicked = true
+            const reponseUtilisateur = document.getElementById("reponse-utilisateur");
+            reponseUtilisateur.textContent = indice(text);
+        }
+        if (GAME_STATE.vie == 0) {
+            document.getElementById("question-box").style.display = "none"
+            document.getElementById("death-box").style.display = "block"
+            document.getElementById("bomb").style.display = "none"
+            GAME_STATE.dead = true
+        }
+    }
+    
     GAME_STATE.lastTime = currentTime
 
     requestAnimationFrame(update)
 }
 
 function init() {
+
     timer()
 
     update()
@@ -110,12 +259,10 @@ function init() {
 
 init()
 
-
 // Fonction pour la boite à Question
 
 const boutonRepondre = document.getElementById("bouton-repondre");
 const reponse = document.getElementById("reponse");
-const reponseUtilisateur = document.getElementById("reponse-utilisateur");
 
 boutonRepondre.addEventListener('click', (e) => {
     reponse.value = ""

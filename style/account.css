@@ -1,13 +1,19 @@
-@import url('https://fonts.googleapis.com/css?family=Abel');
+@font-face {
+  font-family: myFirstFont;
+  src: url('../assets/Orbitron-VariableFont_wght.ttf');
+}
 
 html, body {
-  font-family: myFirstFont;
   background: url('../assets/MicrosoftTeams-image6.png');
   background-position-x: center;
   background-size: cover;
   background-attachment: fixed;
   background-repeat: no-repeat;
   
+}
+
+body {
+  font-family: myFirstFont;
 }
 
 .center {
@@ -37,14 +43,13 @@ html, body {
   position: absolute;
   width: 150px;
   height: 100%;
-  background: linear-gradient(#dE685E, #EE786E);
   transition: width 0.4s;
   overflow: hidden;
   z-index: 2;
 }
 
 .card.green .additional {
-  background: linear-gradient(#92bCa6, #A2CCB6);
+  background: linear-gradient(#654b99, #654b99);
 }
 
 
@@ -105,7 +110,7 @@ html, body {
 }
 
 .card.green .additional .more-info h1 {
-  color: #224C36;
+  color: #fffffc;
 }
 
 .card .additional .coords {
@@ -115,7 +120,7 @@ html, body {
 }
 
 .card.green .additional .coords {
-  color: #325C46;
+  color: #fffffc;
 }
 
 .card .additional .coords span + span {
@@ -134,7 +139,7 @@ html, body {
 }
 
 .card.green .additional .stats {
-  color: #353535;
+  color: #fffffc;
 }
 
 .card .additional .stats > div {

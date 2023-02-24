@@ -9,13 +9,37 @@
 </head>
 <body>
     <div id="timer"></div>
-    <img id="bomb" src="../assets/Bombe1.png" alt="Bombe">
-    <div class="question-box">
-        <h2>Quel intelligence artificielle Google utilise le machine learning pour proposer de meilleurs résultats aux internautes sur des requêtes complexes ?</h2>
+    <img id="bomb" src="../assets/Bombes/1_bombe.png" alt="Bombe">
+    <img id="death" src="../assets/Mort.png" alt="Mort">
+    <div id="question-box" class="question-box">
+        <h2 id="question">Quel intelligence artificielle Google utilise le machine learning pour proposer de meilleurs résultats aux internautes sur des requêtes complexes ?</h2>
         <input type="text" id="reponse" placeholder="Entrez le titre de votre événement ici...">
         <button id="bouton-repondre">Clear</button>
         <div id="reponse-utilisateur"></div>
     </div>
+
+    <div id="reponse-box" class="reponse-box">
+        <h2 id="reponse">Perdu</h2>
+        <h4 id="reponse">efehf eevf efd</h4>
+        <button id="bouton-repondre">Suivant</button>
+        <div id="reponse-utilisateur"></div>
+    </div>
+    
+    <div id="death-box" class="question-box">
+        <h2>Vous êtes mort</h2>
+        <a href="/menu"><button id="bouton-repondre" >Recommencer</button></a>
+        <div id="reponse-utilisateur"></div>
+    </div>
+ 
+    <img id="dif" src="" alt="niveau_de_difficulte_trois">
+    <img id="num" src="" alt="chiffres_numero_huit">
+    
+    <div id="victoire">
+        <h2 id="goal">Victoire</h2>
+        <h3 id="goal">Félicitation tu as gagné le droit de recommencer</h3>
+        <button id="suite"><a href="/account">Envoyer ses stats</a></button>
+    </div>
+
     <div style="position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); text-align: center; margin-top: 10px; height: 100px; width: 20%; border-radius: 10px;">
         <img id="vie1" src="../assets/Vie.png" style="width: 100px; height: 100px;">
         <img id="vie2" src="../assets/Vie.png" style="width: 100px; height: 100px;">

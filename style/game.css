@@ -8,9 +8,9 @@ body  {
     font-family: myFirstFont;
     height: 100%;
     overflow: hidden;
-    background-image: url('../assets/background_game.png');
+    background-image: url('../assets/fond_jeu_remake.png');
     background-position-x: center;
-    background-size: contain;
+    background-size: cover;
     background-attachment: fixed;
     background-repeat: no-repeat;
 }
@@ -22,20 +22,22 @@ body  {
     transform: translate(-50%, -50%); /* décalage de 50% de sa propre taille */
 }
 
+#death {
+    display: none;
+    width: 20%;
+    position: absolute; /* postulat de départ */
+    top: 60%; left: 50%; /* à 50%/50% du parent référent */
+    transform: translate(-50%, -50%); /* décalage de 50% de sa propre taille */
+}
+
 #timer {
     display: block;
 }
 
-/*****Boite à Question*****/
-
-/*body {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-}*/
+/***** Boite à Question *****/
 
 .question-box {
+  display: content;
   background-color: #f2f2f2;
   padding: 20px;
   border: 1px solid #ccc;
@@ -47,6 +49,11 @@ body  {
 
 h2 {
   font-size: 24px;
+  margin-bottom: 10px;
+}
+
+h4 {
+  font-size: smaller;
   margin-bottom: 10px;
 }
 
@@ -87,4 +94,55 @@ button:hover {
   text-align: center;
 }
 
-/*****Fin de la Boite*****/
+/***** Fin de la Boite *****/
+
+/***** Boite à Réponse *****/
+
+.reponse-box {
+  display: none;
+  background-color: #f2f2f2;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 400px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+/***** Fin de la Boite *****/
+
+#victoire {
+  display: none;
+  background-color: #f2f2f2;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 400px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+#death-box {
+  display: none;
+  background-color: #f2f2f2;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 400px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+#num {
+  width: 20%;
+  position: absolute; /* postulat de départ */
+  top: 20%; left: 25%; /* à 50%/50% du parent référent */
+  transform: translate(-50%, -50%); /* décalage de 50% de sa propre taille */
+}
+
+#dif {
+  width: 10%;
+  position: absolute; /* postulat de départ */
+  top: 15%; left: 10%; /* à 50%/50% du parent référent */
+  transform: translate(-50%, -50%); /* décalage de 50% de sa propre taille */
+}
