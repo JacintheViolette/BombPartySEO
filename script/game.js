@@ -9,7 +9,7 @@ const GAME_STATE = {
     questions: QUESTION,
     dead: false,
     currentQuestion: {},
-    currentRound: 20,
+    currentRound: 1,
     currentDifficulty: 1,
     win: false,
     vie: 3,
@@ -190,10 +190,6 @@ function update() {
         document.getElementById("victoire").style.display = "block"
     }
 
-    if (GAME_STATE.explication) {
-        console.log("explication")
-    }
-
     if (!GAME_STATE.explication) {
         if (!GAME_STATE.win && !GAME_STATE.dead) {
             if (GAME_STATE.timer[1] != 0 && !GAME_STATE.win && !GAME_STATE.dead) {
@@ -229,7 +225,20 @@ function update() {
                 GAME_STATE.dead == true
             }
             
-            if (GAME_STATE.timer[1] <= 0) {
+            if (GAME_STATE.timer[1] <= 0 && !GAME_STATE.explication) {
+                if (GAME_STATE.vie > 0) {
+                    document.getElementById("question-box").style.display = "none"
+                    document.getElementById("reponse-box").style.display = "block"
+                    document.getElementById("explication").textContent = GAME_STATE.currentQuestion["explication"]
+                } else if (GAME_STATE.vie == 0) {
+                    document.getElementById("question-box").style.display = "none"
+                    document.getElementById("reponse-box").style.display = "none"
+                    document.getElementById("death-box").style.display = "block"
+                    document.getElementById("bomb").style.display = "none"
+                    document.getElementById("death").style.display = "block"
+                    document.getElementById("raison").textContent = GAME_STATE.currentQuestion["explication"]
+                    GAME_STATE.dead = true
+                }
                 currentIdx = pickRandomNum()
                 GAME_STATE.vie--
                 checkLives()
@@ -239,21 +248,8 @@ function update() {
                 const reponseUtilisateur = document.getElementById("reponse-utilisateur");
                 reponseUtilisateur.textContent = indice(text);
 
-                if (GAME_STATE.vie > 0) {
-                    document.getElementById("question-box").style.display = "none"
-                    document.getElementById("reponse-box").style.display = "block"
-                    document.getElementById("explication").textContent = GAME_STATE.currentQuestion["explication"]
-                }
 
                 GAME_STATE.explication = true
-            }
-            if (GAME_STATE.vie == 0) {
-                document.getElementById("question-box").style.display = "none"
-                document.getElementById("death-box").style.display = "block"
-                document.getElementById("bomb").style.display = "none"
-                document.getElementById("death").style.display = "block"
-                document.getElementById("raison").textContent = GAME_STATE.currentQuestion["explication"]
-                GAME_STATE.dead = true
             }
         }
     }
