@@ -9,8 +9,7 @@ import (
 )
 
 func main() {
-	addr := "10.10.5.98:6960"
-	//ipChezMoi := "192.168.1.24:6969"
+	addr := "your address here"
 
 	http.Handle("/style/", http.StripPrefix("/style/", http.FileServer(http.Dir("./style"))))
 	http.Handle("/script/", http.StripPrefix("/script/", http.FileServer(http.Dir("./script"))))
